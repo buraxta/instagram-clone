@@ -3,10 +3,11 @@ import React from "react";
 import { BsSearch } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
 const Header = () => {
   return (
-    <div className="flex justify-between sm:px-40 px-10 mt-5 max-w-7xl">
+    <div className="flex justify-between  px-10 mt-5 max-w-7xl mx-4 lg:mx-auto">
       <div>
         <Image
           className="hidden lg:inline-grid cursor-pointer"
@@ -23,13 +24,23 @@ const Header = () => {
           height={40}
         />
       </div>
-      <div className="flex items-center space-x-2 border p-2 rounded-lg">
-        <BsSearch />
-        <input className="outline-none" type="text" placeholder="Search" />
+      <div className="flex items-center space-x-2 relative ">
+        <MagnifyingGlassIcon className="h-6 w-6 text-gray-500 absolute top-2 left-3" />
+        <input
+          className="bg-gray-50 pl-10 border-gray-500 text-sm 
+          focus:ring-black focus:border-black rounded-md"
+          type="text"
+          placeholder="Search"
+        />
       </div>
-      <div className="flex space-x-3 items-center">
-        <AiFillHome className="text-2xl" />
-        <IoMdAddCircleOutline className="text-2xl" />
+      <div className="flex space-x-4 items-center">
+        <AiFillHome className="hidden md:inline-flex text-2xl hover:scale-125 transition-transform duration-200 ease-out cursor-pointer" />
+        <IoMdAddCircleOutline className="text-2xl hover:scale-125 transition-all duration-200 ease-out cursor-pointer" />
+        <img
+          src="https://miro.medium.com/v2/resize:fit:2400/1*JzZwQN6IIYCLkdaO3tAboA.jpeg"
+          alt="user-image"
+          className="h-10 rounded-full cursor-pointer"
+        />
       </div>
     </div>
   );
