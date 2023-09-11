@@ -1,5 +1,7 @@
 import React from "react";
-import { BsThreeDots } from "react-icons/bs";
+import { BsThreeDots, BsBookmark } from "react-icons/bs";
+import { AiOutlineHeart } from "react-icons/ai";
+import { FaRegCommentDots } from "react-icons/fa";
 
 const Post = ({ img, userImg, caption, username, id }) => {
   return (
@@ -19,6 +21,13 @@ const Post = ({ img, userImg, caption, username, id }) => {
         </div>
       </section>
       <img className="w-full h-80 object-contain" src={img} alt="post image" />
+      <div className="flex justify-between p-2 mt-2">
+        <div className="flex space-x-3">
+          <AiOutlineHeart className="btn" />
+          <FaRegCommentDots className="btn" />
+        </div>
+        <BsBookmark className="btn" />
+      </div>
     </div>
   );
 };

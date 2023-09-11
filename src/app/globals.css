@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .btn {
+    @apply text-xl hover:scale-110 transition-transform 
+    duration-200 ease-out cursor-pointer;
+  }
+}
