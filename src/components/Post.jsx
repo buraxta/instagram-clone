@@ -1,5 +1,5 @@
 import React from "react";
-import { BsThreeDots, BsBookmark } from "react-icons/bs";
+import { BsThreeDots, BsBookmark, BsEmojiSmile } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 
@@ -28,6 +28,21 @@ const Post = ({ img, userImg, caption, username, id }) => {
         </div>
         <BsBookmark className="btn" />
       </div>
+      <div className="flex space-x-2 truncate">
+        <p className="font-bold">{username}</p>
+        <p>{caption}</p>
+      </div>
+      <form className="flex items-center space-x-3 mt-3">
+        <BsEmojiSmile className="text-xl" />
+        <input
+          type="text"
+          className=" w-full border-none focus:ring-0"
+          placeholder="Enter your comment..."
+        />
+        <button type="post" className="text-blue-500 font-bold">
+          Post
+        </button>
+      </form>
     </div>
   );
 };
