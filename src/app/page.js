@@ -1,9 +1,11 @@
-import Image from "next/image";
+import Feed from "@/components/Feed";
+import SigninButton from "@/components/SigninButton";
 
 export default function Home() {
   return (
     <>
-      <h1>Hello World!</h1>
+      <Feed />
+      <SigninButton />
     </>
   );
 }

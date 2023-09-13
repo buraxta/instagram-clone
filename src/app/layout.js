@@ -17,11 +17,8 @@ export default async function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className + "min-h-screen bg-gray-50"}>
         <Header />
-        <Feed />
-        <Provider>
-          <SigninButton />
-          {children}
-        </Provider>
+
+        <Provider>{children}</Provider>
       </body>
     </html>
   );
