@@ -1,14 +1,18 @@
 import React from "react";
+import { AiOutlinePlus } from "react-icons/ai";
 
-const Story = ({ img, username }) => {
+const Story = ({ img, username, isUser }) => {
   return (
-    <div>
+    <div className="relative group cursor-pointer">
       <img
         className="h-14 rounded-full p-[1.5px] border-red-500 border-2 
-        cursor-pointer hover:scale-110 transition-transform duration-200 ease-out"
+         group-hover:scale-110 transition-transform duration-200 ease-out"
         src={img}
         alt={username}
       />
+      {isUser && (
+        <AiOutlinePlus className="h-6 w-7  absolute top-4 left-3 text-white" />
+      )}
       <p className="text-xs w-14 truncate">{username}</p>
     </div>
   );

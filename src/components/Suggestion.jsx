@@ -13,7 +13,6 @@ const Suggestion = () => {
       id: i,
     }));
     setStoryUsers(storyUsers);
-    console.log(storyUsers);
   }, []);
 
   return (

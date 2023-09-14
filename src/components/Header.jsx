@@ -10,7 +10,6 @@ import SignInOut from "./SignInOut";
 
 const Header = async () => {
   const session = await getServerSession(authOptions);
-  console.log(session);
   return (
     <div className="shadow-sm border-b mb-3 sticky top-0 bg-white pt-1 z-30">
       <div
