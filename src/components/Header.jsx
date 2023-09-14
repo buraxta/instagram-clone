@@ -5,7 +5,7 @@ import { IoMdAddCircleOutline } from "react-icons/io";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import GoogleButton from "./GoogleButton";
+
 import SignInOut from "./SignInOut";
 
 const Header = async () => {
