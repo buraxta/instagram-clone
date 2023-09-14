@@ -5,10 +5,12 @@ import React from "react";
 const GoogleButton = ({ provider }) => {
   return (
     <button
-      onClick={() => signIn(provider.id, { callbackUrl: "/" })}
+      onClick={() =>
+        signIn("google", { callbackUrl: "http://localhost:3000/  " })
+      }
       className="bg-red-400 p-3 rounded-lg text-white hover:bg-red-500"
     >
-      Sign in with {provider.name}
+      Sign in
     </button>
   );
 };

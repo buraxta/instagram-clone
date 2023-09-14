@@ -1,11 +1,16 @@
 import Image from "next/image";
 import React from "react";
-import { BsSearch } from "react-icons/bs";
 import { AiFillHome } from "react-icons/ai";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import GoogleButton from "./GoogleButton";
+import SignInOut from "./SignInOut";
 
-const Header = () => {
+const Header = async () => {
+  const session = await getServerSession(authOptions);
+  console.log(session);
   return (
     <div className="shadow-sm border-b mb-3 sticky top-0 bg-white pt-1 z-30">
       <div
@@ -39,12 +44,7 @@ const Header = () => {
         </div>
         <div className="flex space-x-4 items-center">
           <AiFillHome className="hidden md:inline-flex text-2xl hover:scale-125 transition-transform duration-200 ease-out cursor-pointer" />
-          <IoMdAddCircleOutline className="text-2xl hover:scale-125 transition-all duration-200 ease-out cursor-pointer" />
-          <img
-            src="https://miro.medium.com/v2/resize:fit:2400/1*JzZwQN6IIYCLkdaO3tAboA.jpeg"
-            alt="user-image"
-            className="h-10 rounded-full cursor-pointer"
-          />
+          <SignInOut />
         </div>
       </div>
     </div>
