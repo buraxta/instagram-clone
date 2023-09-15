@@ -1,15 +1,15 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { AiFillHome } from "react-icons/ai";
-import { IoMdAddCircleOutline } from "react-icons/io";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-
 import SignInOut from "./SignInOut";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
-const Header = async () => {
-  const session = await getServerSession(authOptions);
+const Header = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   return (
     <div className="shadow-sm border-b mb-3 sticky top-0 bg-white pt-1 z-30">
       <div
@@ -23,6 +23,7 @@ const Header = async () => {
             alt="logo"
             width={150}
             height={40}
+            onClick={() => router.push("/")}
           />
           <Image
             className="cursor-pointer lg:hidden"
@@ -30,6 +31,7 @@ const Header = async () => {
             alt="logo"
             width={40}
             height={40}
+            onClick={() => router.push("/")}
           />
         </div>
         <div className="flex items-center space-x-2 relative ">
@@ -42,7 +44,10 @@ const Header = async () => {
           />
         </div>
         <div className="flex space-x-4 items-center">
-          <AiFillHome className="hidden md:inline-flex text-2xl hover:scale-125 transition-transform duration-200 ease-out cursor-pointer" />
+          <AiFillHome
+            onClick={() => router.push("/")}
+            className="hidden md:inline-flex text-2xl hover:scale-125 transition-transform duration-200 ease-out cursor-pointer"
+          />
           <SignInOut />
         </div>
       </div>
