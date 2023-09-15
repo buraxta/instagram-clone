@@ -10,7 +10,12 @@ const Posts = () => {
     const unsubscribe = onSnapshot(
       query(collection(db, "posts"), orderBy("timestamp", "desc")),
       (snapshot) => {
-        setPosts(snapshot.docs.map((doc) => doc.data()));
+        setPosts(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }))
+        );
       }
     );
     return unsubscribe;
@@ -18,6 +23,7 @@ const Posts = () => {
 
   return (
     <div>
+      {console.log("post: ", posts)}
       {posts.map((post) => (
         <Post
           key={post.id}

@@ -3,9 +3,26 @@ import { BsThreeDots, BsBookmark, BsEmojiSmile } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { useSession } from "next-auth/react";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const Post = ({ img, userImg, caption, username, id }) => {
   const { data: session } = useSession();
+  const [comment, setComment] = React.useState("");
+  // console.log(img, userImg, caption, username, id);
+
+  const sentComment = async (e) => {
+    e.preventDefault();
+    const commentToSend = comment;
+    setComment("");
+    await addDoc(collection(db, "posts", id, "comments"), {
+      comment: commentToSend,
+      username: session.user.username,
+      userImg: session.user.image,
+      timestamp: serverTimestamp(),
+    });
+  };
+
   return (
     <div className="bg-white my-7 p-5 border rounded-md">
       <section className="flex justify-between  ">
@@ -46,8 +63,15 @@ const Post = ({ img, userImg, caption, username, id }) => {
             type="text"
             className=" w-full border-none focus:ring-0"
             placeholder="Enter your comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
           />
-          <button type="post" className="text-blue-500 font-bold">
+          <button
+            disabled={!comment.trim()}
+            onClick={sentComment}
+            type="submit"
+            className="text-blue-500 font-bold disabled:text-blue-200"
+          >
             Post
           </button>
         </form>
