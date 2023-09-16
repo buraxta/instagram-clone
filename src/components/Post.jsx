@@ -3,13 +3,33 @@ import { BsThreeDots, BsBookmark, BsEmojiSmile } from "react-icons/bs";
 import { AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../../firebase";
+import moment from "moment/moment";
 
 const Post = ({ img, userImg, caption, username, id }) => {
   const { data: session } = useSession();
   const [comment, setComment] = React.useState("");
-  // console.log(img, userImg, caption, username, id);
+  const [comments, setComments] = React.useState([]);
+
+  React.useEffect(() => {
+    const unsub = onSnapshot(
+      query(
+        collection(db, "posts", id, "comments"),
+        orderBy("timestamp", "desc")
+      ),
+      (snapshot) => {
+        setComments(snapshot.docs.map((doc) => doc.data()));
+      }
+    );
+  }, [db, id]);
 
   const sentComment = async (e) => {
     e.preventDefault();
@@ -55,6 +75,24 @@ const Post = ({ img, userImg, caption, username, id }) => {
         <p className="font-bold">{username}</p>
         <p>{caption}</p>
       </div>
+
+      {comments.length > 0 && (
+        <div className="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+          {console.log(comments)}
+          {comments.map((comment) => (
+            <div className="flex items-center space-x-2 mb-2">
+              <img
+                className="h-7 rounded-full object-cover"
+                src={comment.userImg}
+                alt="user-image"
+              />
+              <p className="font-semibold">{comment.username}</p>
+              <p className="flex-1 truncate">{comment.comment}</p>
+              {moment(comment.timestamp?.toDate()).fromNow()}
+            </div>
+          ))}
+        </div>
+      )}
 
       {session && (
         <form className="flex items-center space-x-3 mt-3">
