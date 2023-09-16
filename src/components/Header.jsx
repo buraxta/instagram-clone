@@ -29,7 +29,7 @@ const Header = () => {
             className="cursor-pointer lg:hidden mr-5"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/96/Instagram.svg/2048px-Instagram.svg.png"
             alt="logo"
-            width={150}
+            width={50}
             height={120}
             onClick={() => router.push("/")}
           />

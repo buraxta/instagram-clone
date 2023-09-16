@@ -35,7 +35,7 @@ const Post = ({ img, userImg, caption, username, id }) => {
         setComments(snapshot.docs.map((doc) => doc.data()));
       }
     );
-  }, [db, id]);
+  }, [id]);
 
   React.useEffect(() => {
     const unsub = onSnapshot(
@@ -44,7 +44,7 @@ const Post = ({ img, userImg, caption, username, id }) => {
         setLikes(snapshot.docs.map((doc) => doc.data()));
       }
     );
-  }, [db, id]);
+  }, [id]);
 
   React.useEffect(() => {
     setIsLiked(
@@ -135,11 +135,16 @@ const Post = ({ img, userImg, caption, username, id }) => {
         <div className="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
           {console.log(comments)}
           {comments.map((comment) => (
-            <div className="flex items-center space-x-2 mb-2">
-              <img
+            <div
+              key={comment.timestamp}
+              className="flex items-center space-x-2 mb-2"
+            >
+              <Image
                 className="h-7 rounded-full object-cover"
                 src={comment.userImg}
                 alt="user-image"
+                width={30}
+                height={50}
               />
               <p className="font-semibold">{comment.username}</p>
               <p className="flex-1 truncate">{comment.comment}</p>
