@@ -4,6 +4,7 @@ import React from "react";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { useRecoilState } from "recoil";
 import { modalState } from "../../atom/modalAtom";
+import Image from "next/image";
 
 const SignInOut = () => {
   const [open, setOpen] = useRecoilState(modalState);
@@ -16,11 +17,13 @@ const SignInOut = () => {
             onClick={() => setOpen(true)}
             className="text-2xl hover:scale-125 transition-all duration-200 ease-out cursor-pointer"
           />
-          <img
+          <Image
             onClick={signOut}
             src={session.user.image}
             alt="user-image"
             className="h-10 rounded-full cursor-pointer"
+            width={40}
+            height={50}
           />
         </div>
       ) : (

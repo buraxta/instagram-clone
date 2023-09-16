@@ -1,5 +1,6 @@
 "use client";
 import { faker } from "@faker-js/faker";
+import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const Suggestion = () => {
@@ -22,11 +23,13 @@ const Suggestion = () => {
         <button className="text-gray-800 font-semibold">See All</button>
       </div>
       {storyUsers.map((profile) => (
-        <div className="flex space-x-2 ml-12 mt-4">
-          <img
+        <div key={profile.id} className="flex space-x-2 ml-12 mt-4">
+          <Image
             src={profile.img}
             alt={profile.username}
             className="rounded-full h-14 border p-[2px]"
+            width={60}
+            height={60}
           />
           <div className="flex-1">
             <p className="font-bold text-sm">{profile.username}</p>

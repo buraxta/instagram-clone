@@ -16,6 +16,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import moment from "moment/moment";
+import Image from "next/image";
 
 const Post = ({ img, userImg, caption, username, id }) => {
   const { data: session } = useSession();
@@ -81,10 +82,12 @@ const Post = ({ img, userImg, caption, username, id }) => {
     <div className="bg-white my-7 p-5 border rounded-md">
       <section className="flex justify-between  ">
         <div className="flex space-x-3 items-center">
-          <img
-            className="h-12 rounded-full object-cover p-1 ring-1 ring-gray-300"
+          <Image
+            className="h-12 mb-2 rounded-full object-cover p-1 ring-1 ring-gray-300"
             src={userImg}
             alt="profile image"
+            width={50}
+            height={50}
           />
 
           <p className="font-semibold">{username}</p>
@@ -93,7 +96,13 @@ const Post = ({ img, userImg, caption, username, id }) => {
           <BsThreeDots />
         </div>
       </section>
-      <img className="w-full h-80 object-contain" src={img} alt="post image" />
+      <Image
+        className="w-full h-80 object-contain"
+        src={img}
+        alt="post image"
+        width={400}
+        height={400}
+      />
 
       {session && (
         <div>
