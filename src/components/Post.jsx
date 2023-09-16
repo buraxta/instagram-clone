@@ -1,15 +1,18 @@
 import React from "react";
 import { BsThreeDots, BsBookmark, BsEmojiSmile } from "react-icons/bs";
-import { AiOutlineHeart } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 import { FaRegCommentDots } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import {
   addDoc,
   collection,
+  deleteDoc,
+  doc,
   onSnapshot,
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import { db } from "../../firebase";
 import moment from "moment/moment";
@@ -18,6 +21,8 @@ const Post = ({ img, userImg, caption, username, id }) => {
   const { data: session } = useSession();
   const [comment, setComment] = React.useState("");
   const [comments, setComments] = React.useState([]);
+  const [likes, setLikes] = React.useState([]);
+  const [isLiked, setIsLiked] = React.useState(false);
 
   React.useEffect(() => {
     const unsub = onSnapshot(
@@ -31,6 +36,22 @@ const Post = ({ img, userImg, caption, username, id }) => {
     );
   }, [db, id]);
 
+  React.useEffect(() => {
+    const unsub = onSnapshot(
+      collection(db, "posts", id, "likes"),
+      (snapshot) => {
+        setLikes(snapshot.docs.map((doc) => doc.data()));
+      }
+    );
+  }, [db, id]);
+
+  React.useEffect(() => {
+    setIsLiked(
+      likes.findIndex((like) => like.username === session?.user?.username) !==
+        -1
+    );
+  }, [likes]);
+
   const sentComment = async (e) => {
     e.preventDefault();
     const commentToSend = comment;
@@ -41,6 +62,19 @@ const Post = ({ img, userImg, caption, username, id }) => {
       userImg: session.user.image,
       timestamp: serverTimestamp(),
     });
+  };
+
+  const handleLike = async () => {
+    const likeRef = doc(db, "posts", id, "likes", session.user.username);
+    if (isLiked) {
+      await deleteDoc(likeRef);
+      setIsLiked(false);
+    } else {
+      await setDoc(likeRef, {
+        username: session.user.username,
+      });
+      setIsLiked(true);
+    }
   };
 
   return (
@@ -62,12 +96,24 @@ const Post = ({ img, userImg, caption, username, id }) => {
       <img className="w-full h-80 object-contain" src={img} alt="post image" />
 
       {session && (
-        <div className="flex justify-between p-2 mt-2">
-          <div className="flex space-x-3">
-            <AiOutlineHeart className="btn" />
-            <FaRegCommentDots className="btn" />
+        <div>
+          <div className="flex justify-between p-2 mt-2">
+            <div className="flex space-x-3">
+              {isLiked ? (
+                <AiFillHeart
+                  onClick={handleLike}
+                  className="btn text-red-500"
+                />
+              ) : (
+                <AiOutlineHeart onClick={handleLike} className="btn" />
+              )}
+              <FaRegCommentDots className="btn" />
+            </div>
+            <BsBookmark className="btn" />
           </div>
-          <BsBookmark className="btn" />
+          <p className="ml-2 mt-[-5px] font-semibold">
+            {likes.length > 0 ? `${likes.length} likes` : null}
+          </p>
         </div>
       )}
 
